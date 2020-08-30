@@ -318,7 +318,7 @@ mixin AutoScrollControllerMixin on ScrollController
         prevOffset = currentOffset;
         final nearest = getNearestIndex(index);
         final moveTarget =
-            _forecastMoveUnit(index, nearest, usedSuggestedRowHeightIfAny);
+            forecastMoveUnit(index, nearest, usedSuggestedRowHeightIfAny);
         if (moveTarget < 0) //can't forecast the move range
           return null;
         // assume suggestRowHeight will move to correct offset in just one time.
