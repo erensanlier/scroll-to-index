@@ -290,7 +290,7 @@ mixin AutoScrollControllerMixin on ScrollController
 
       await _bringIntoViewportIfNeed(index, preferPosition,
           (double offset) async {
-        await animateTo(offset + 40, duration: duration, curve: Curves.ease);
+        await animateTo(offset, duration: duration, curve: Curves.ease);
         await _waitForWidgetStateBuild();
         return null;
       });
@@ -332,7 +332,7 @@ mixin AutoScrollControllerMixin on ScrollController
         currentOffset = moveTarget;
         spentDuration += suggestedDuration ?? moveDuration;
         final oldOffset = offset;
-        await animateTo(currentOffset + 40,
+        await animateTo(currentOffset,
             duration: suggestedDuration ?? moveDuration, curve: Curves.ease);
         await _waitForWidgetStateBuild();
         if (!hasClients || offset == oldOffset) {
@@ -350,7 +350,7 @@ mixin AutoScrollControllerMixin on ScrollController
           if (finalOffset != offset) {
             _isAutoScrolling = true;
             final remaining = duration - spentDuration;
-            await animateTo(finalOffset + 40,
+            await animateTo(finalOffset,
                 duration: remaining <= Duration.zero ? _millisecond : remaining,
                 curve: Curves.ease);
             await _waitForWidgetStateBuild();
@@ -361,7 +361,7 @@ mixin AutoScrollControllerMixin on ScrollController
               for (var i = 0;
                   i < count && hasClients && offset != finalOffset;
                   i++) {
-                await animateTo(finalOffset + 40,
+                await animateTo(finalOffset,
                     duration: _millisecond, curve: Curves.ease);
                 await _waitForWidgetStateBuild();
               }
