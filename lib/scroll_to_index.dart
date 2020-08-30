@@ -316,9 +316,9 @@ mixin AutoScrollControllerMixin on ScrollController
       while (prevOffset != currentOffset &&
           !(contains = isIndexStateInLayoutRange(index))) {
         prevOffset = currentOffset;
-        final nearest = getNearestIndex(index);
+        final nearest = _getNearestIndex(index);
         final moveTarget =
-            forecastMoveUnit(index, nearest, usedSuggestedRowHeightIfAny);
+            _forecastMoveUnit(index, nearest, usedSuggestedRowHeightIfAny);
         if (moveTarget < 0) //can't forecast the move range
           return null;
         // assume suggestRowHeight will move to correct offset in just one time.
@@ -410,7 +410,7 @@ mixin AutoScrollControllerMixin on ScrollController
 
   /// NOTE: this is used to forcase the nearestIndex. if the the index equals targetIndex,
   /// we will use the function, calling _directionalOffsetToRevealInViewport to get move unit.
-  double forecastMoveUnit(
+  double _forecastMoveUnit(
       int targetIndex, int currentNearestIndex, bool useSuggested) {
     assert(targetIndex != currentNearestIndex);
     currentNearestIndex = currentNearestIndex ?? 0; //null as none of state
@@ -439,7 +439,7 @@ mixin AutoScrollControllerMixin on ScrollController
     return absoluteOffsetToViewport;
   }
 
-  int getNearestIndex(int index) {
+  int _getNearestIndex(int index) {
     final list = tagMap.keys;
     if (list.isEmpty) return null;
 
