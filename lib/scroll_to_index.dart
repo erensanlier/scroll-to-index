@@ -290,7 +290,7 @@ mixin AutoScrollControllerMixin on ScrollController
 
       await _bringIntoViewportIfNeed(index, preferPosition,
           (double offset) async {
-        await animateTo(offset + 40, duration: duration, curve: Curves.ease);
+        await animateTo(offset - 40, duration: duration, curve: Curves.ease);
         await _waitForWidgetStateBuild();
         return null;
       });
@@ -316,7 +316,7 @@ mixin AutoScrollControllerMixin on ScrollController
       while (prevOffset != currentOffset &&
           !(contains = isIndexStateInLayoutRange(index))) {
         prevOffset = currentOffset;
-        final nearest = _getNearestIndex(index);
+        final nearest = getNearestIndex(index);
         final moveTarget =
             _forecastMoveUnit(index, nearest, usedSuggestedRowHeightIfAny);
         if (moveTarget < 0) //can't forecast the move range
@@ -332,7 +332,7 @@ mixin AutoScrollControllerMixin on ScrollController
         currentOffset = moveTarget;
         spentDuration += suggestedDuration ?? moveDuration;
         final oldOffset = offset;
-        await animateTo(currentOffset,
+        await animateTo(currentOffset - 40,
             duration: suggestedDuration ?? moveDuration, curve: Curves.ease);
         await _waitForWidgetStateBuild();
         if (!hasClients || offset == oldOffset) {
@@ -347,7 +347,7 @@ mixin AutoScrollControllerMixin on ScrollController
         await _bringIntoViewportIfNeed(
             index, preferPosition ?? _alignmentToPosition(lastScrollDirection),
             (finalOffset) async {
-          final targetOffset = finalOffset + 40;
+          final targetOffset = finalOffset - 40;
           if (targetOffset != offset) {
             _isAutoScrolling = true;
             final remaining = duration - spentDuration;
@@ -410,7 +410,7 @@ mixin AutoScrollControllerMixin on ScrollController
 
   /// NOTE: this is used to forcase the nearestIndex. if the the index equals targetIndex,
   /// we will use the function, calling _directionalOffsetToRevealInViewport to get move unit.
-  double _forecastMoveUnit(
+  double forecastMoveUnit(
       int targetIndex, int currentNearestIndex, bool useSuggested) {
     assert(targetIndex != currentNearestIndex);
     currentNearestIndex = currentNearestIndex ?? 0; //null as none of state
@@ -439,7 +439,7 @@ mixin AutoScrollControllerMixin on ScrollController
     return absoluteOffsetToViewport;
   }
 
-  int _getNearestIndex(int index) {
+  int getNearestIndex(int index) {
     final list = tagMap.keys;
     if (list.isEmpty) return null;
 
